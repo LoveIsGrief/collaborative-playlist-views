@@ -1,0 +1,42 @@
+{
+  "name": "collaborative-playlist-views",
+  "version": "0.0.0",
+  "description": "An idea how to improve collaborative playlists.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/LoveIsGrief/collaborative-playlist-views.git"
+  },
+  "keywords": [
+    "sharing",
+    "collaborative",
+    "playlist"
+  ],
+  "author": "Michael J. Vogel",
+  "license": "LGPL v.2",
+  "bugs": {
+    "url": "https://github.com/LoveIsGrief/collaborative-playlist-views/issues"
+  },
+  "homepage": "https://github.com/LoveIsGrief/collaborative-playlist-views",
+  "devDependencies": {
+    "grunt-jasmine-node": "^0.2.1",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-sass": "^0.7.3",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-coffeelint": "0.0.10",
+    "grunt": "^0.4.4"
+  },
+  "dependencies": {
+    "es6-shim": "^0.10.1",
+    "set": "^1.0.1"
+  }
+}

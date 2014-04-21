@@ -15,8 +15,8 @@ module.exports = (grunt) ->
 			compile:
 				files:[
 					expand: true
-					cwd: "src/site/stylesheets"
-					src: ["*.sass", "*.scss"]
+					cwd: "src/"
+					src: ["**/*.sass", "**/*.scss"]
 					dest: buildDir
 					ext: ".css"
 				]

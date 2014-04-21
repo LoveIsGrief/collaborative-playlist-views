@@ -1,0 +1,72 @@
+<html ng-app="collApp">
+<head>
+	<!-- bower:js -->
+	<!-- endbower -->
+
+	<script src="../scripts/app.js"></script>
+	<script src="../scripts/helpers/set.js"></script>
+	<script src="../scripts/controllers/CollaborativeController.js"></script>
+	<script src="../scripts/filters/viewToUser.js"></script>
+
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+	<title>Collaborative Views</title>
+</head>
+<body ng-controller="CollaborativeController">
+
+	<div>
+		<table class="table-striped table-hover">
+			<tr>
+				<th>Song</th>
+				<th>Hidden for:</th>
+			</tr>
+			<tr ng-repeat="item in db">
+				<td>
+					{{item.object.artist}} - {{item.object.title}}
+				</td>
+				<td>
+					<span ng-if="item.hiddenFor.size == users.length">
+						Everyone
+					</span>
+
+					<span
+					ng-if="item.hiddenFor.size != users.length"
+					ng-repeat="user in item.hiddenFor.toArray()">
+						{{user}} <span ng-if="!$last">,</span>
+					</span>
+
+				</td>
+
+			</tr>
+		</table>
+	</div>
+
+	<accordion close-others="true">
+		<accordion-group ng-repeat="user in users" heading="{{user}}" >
+			<tabset>
+				<tab
+				ng-repeat="tab in userViewTabs"
+				heading="{{tab.title}}"
+				>
+					<table class="table-striped table-hover">
+						<tr ng-repeat="item in db|viewToUser:user:tab.showsHidden">
+						<td>
+							{{item.object.artist}} - {{item.object.title}}
+						</td>
+						<td>
+							<button ng-hide="tab.showsHidden" type="button" class="btn" ng-click="hide(item,user)">
+								Hide
+							</button>
+							<button ng-show="tab.showsHidden" type="button" class="btn" ng-click="unhide(item,user)">
+								Unhide
+							</button>
+						</td>
+						</tr>
+					</table>
+				</tab>
+			</tabset>
+		</accordion-group>
+	</accordion>
+
+</body>
+</html>

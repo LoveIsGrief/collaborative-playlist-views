@@ -1,6 +1,6 @@
 module.exports = (grunt) ->
 
-	coffeeFiles = ["*.coffee"]
+	coffeeFiles = ["*.coffee", "**/*.coffee"]
 	buildDir = "build/"
 
 	# Project configuration.
@@ -15,11 +15,16 @@ module.exports = (grunt) ->
 			compile:
 				files:[
 					expand: true
-					cwd: "src/stylesheets"
+					cwd: "src/site/stylesheets"
 					src: ["*.sass", "*.scss"]
 					dest: buildDir
 					ext: ".css"
 				]
+
+		bowerInstall:
+			build:
+				src:[ "#{buildDir}**/*.html"]
+				dependencies: true
 
 		coffee:
 			compile:
@@ -59,38 +64,41 @@ module.exports = (grunt) ->
 				]
 
 		copy:
-			templates:
+			html:
 				files:[
 					expand: true
-					cwd: "src/templates"
-					src: "*.html"
+					cwd: "src"
+					src: "**/*.html"
 					dest: buildDir
 				]
 			images:
 				src: "images/**"
-				dest: buildDir
+				dest: buildDir+"site"
 
 		watch:
 			scripts:
-				files: [ "src/*.coffee", "specs/*.coffee" ]
+				files: coffeeFiles
 				tasks: [ "coffeelint", "coffee", "jasmine_node" ]
 				# options:
 				# 	livereload: true
-			# stylesheets:
-			# 	files: [ "**/*.sass" ]
-			# 	tasks: [ "sass" ]
-			# 	# options:
-			# 	# 	livereload: true
-			# templates:
-			# 	files: [ "src/**/*.html" ]
-			# 	tasks: [ "copy:templates" ]
-			# images:
-			# 	files: ["images/*", "images/**/*"]
-			# 	tasks: ["copy:images"]
-			# livereload:
-			# 	files: [ buildDir+"**/*", buildDir+"*" ]
-			# 	options:
-			# 		livereload: true
+			bower:
+				files: [ "bower.json" ]
+				tasks: [ "bowerInstall"]
+			stylesheets:
+				files: [ "**/*.sass" ]
+				tasks: [ "sass" ]
+				# options:
+				# 	livereload: true
+			html:
+				files: [ "src/**/*.html" ]
+				tasks: [ "copy:html", "bowerInstall" ]
+			images:
+				files: ["images/*", "images/**/*"]
+				tasks: ["copy:images"]
+			livereload:
+				files: [ buildDir+"**/*", buildDir+"*" ]
+				options:
+					livereload: true
 
 		jasmine_node:
 			options:
@@ -98,6 +106,8 @@ module.exports = (grunt) ->
 			all: [ "specs/"]
 
 	# Load the plugin that provides the "uglify" task.
+	grunt.loadNpmTasks "grunt-bower-install-simple"
+	grunt.loadNpmTasks "grunt-bower-install"
 	grunt.loadNpmTasks "grunt-contrib-coffee"
 	grunt.loadNpmTasks "grunt-contrib-watch"
 	grunt.loadNpmTasks "grunt-contrib-sass"
@@ -107,7 +117,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks "grunt-coffeelint"
 
 	# Default task(s).
-	grunt.registerTask "default", [ "coffee", "jasmine_node"]
-	# grunt.registerTask "default", [ "clean", "build", "test", "phantomjs"]
-	# grunt.registerTask "build", ["coffee", "sass", "copy"]
-	# grunt.registerTask "test", ["coffeelint"]
+	grunt.registerTask "default", [ "clean", "build", "test"]
+	grunt.registerTask "bower", [ "bower-install-simple", "bowerInstall"]
+	grunt.registerTask "build", ["coffee", "sass", "copy", "bower"]
+	grunt.registerTask "test", [ "coffeelint", "jasmine_node"]

@@ -9,64 +9,92 @@
 	<script src="../scripts/filters/viewToUser.js"></script>
 
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://bootswatch.com/cyborg/bootstrap.css">
+	<link rel="stylesheet" href="../stylesheets/main.css">
 
 	<title>Collaborative Views</title>
 </head>
 <body ng-controller="CollaborativeController">
 
-	<div>
-		<table class="table-striped table-hover">
-			<tr>
-				<th>Song</th>
-				<th>Hidden for:</th>
-			</tr>
-			<tr ng-repeat="item in db">
-				<td>
-					{{item.object.artist}} - {{item.object.title}}
-				</td>
-				<td>
-					<span ng-if="item.hiddenFor.size == users.length">
-						Everyone
-					</span>
+	<div class="container jumbotron">
+		<h2 >Collaborative Playlist Views
+			<a href="https://github.com/LoveIsGrief/collaborative-playlist-views">
+				<small>Github project</small>
+			</a>
+		</h1>
+		<p>An idea how to improve collaborative playlists.</p>
+		<p>Below is an emulation with what could be on the server
+			and a view for potential users.</p>
+	</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			"Database"
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-hover table-condensed">
+				<tr>
+					<th>Song</th>
+					<th>Hidden for</th>
+				</tr>
+				<tr ng-repeat="item in db">
+					<td>
+						{{item.object.artist}} - {{item.object.title}}
+					</td>
+					<td>
+						<span
+						class="label label-default"
+						ng-if="item.hiddenFor.size == users.length">
+							Everyone
+						</span>
 
-					<span
-					ng-if="item.hiddenFor.size != users.length"
-					ng-repeat="user in item.hiddenFor.toArray()">
-						{{user}} <span ng-if="!$last">,</span>
-					</span>
+						<a
+						ng-repeat="user in item.hiddenFor.toArray()"
+						class="label label-default"
+						ng-if="item.hiddenFor.size != users.length"
+						>
+							{{user}}
+							<!-- <span ng-if="!$last">,</span> -->
+						</a>
 
-				</td>
+					</td>
 
-			</tr>
-		</table>
+				</tr>
+			</table>
+		</div>
 	</div>
 
-	<accordion close-others="true">
-		<accordion-group ng-repeat="user in users" heading="{{user}}" >
-			<tabset>
-				<tab
-				ng-repeat="tab in userViewTabs"
-				heading="{{tab.title}}"
-				>
-					<table class="table-striped table-hover">
-						<tr ng-repeat="item in db|viewToUser:user:tab.showsHidden">
-						<td>
-							{{item.object.artist}} - {{item.object.title}}
-						</td>
-						<td>
-							<button ng-hide="tab.showsHidden" type="button" class="btn" ng-click="hide(item,user)">
-								Hide
-							</button>
-							<button ng-show="tab.showsHidden" type="button" class="btn" ng-click="unhide(item,user)">
-								Unhide
-							</button>
-						</td>
-						</tr>
-					</table>
-				</tab>
-			</tabset>
-		</accordion-group>
-	</accordion>
+	<div class="col-md-3 col-sm-6 min-height"
+		ng-repeat="user in users"
+		>
+			<div class="panel-heading">{{user}}</div>
+			<div class="panel panel-default" >
+				<div class="panel-body">
+					<tabset>
+						<tab
+						ng-repeat="tab in userViewTabs"
+						heading="{{tab.title}}"
+						>
+							<table class="table table-striped table-hover table-condensed">
+								<tr ng-repeat="item in db|viewToUser:user:tab.showsHidden">
+								<td>
+									{{item.object.artist}} - {{item.object.title}}
+								</td>
+								<td>
+									<button ng-hide="tab.showsHidden" type="button" class="btn btn-warning" ng-click="hide(item,user)">
+										Hide
+									</button>
+									<button ng-show="tab.showsHidden" type="button" class="btn btn-info" ng-click="unhide(item,user)">
+										Unhide
+									</button>
+								</td>
+								</tr>
+							</table>
+						</tab>
+					</tabset>
+				</div>
+			</div>
+	</div>
+
 
 </body>
 </html>

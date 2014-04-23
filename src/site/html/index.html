@@ -63,9 +63,8 @@
 					</table>
 				</div>
 			</div>
-			<div class=" panel panel-primary col-md-6">
-				<div class="panel-heading">"Visible to everybody"</div>
-				<div class="panel panel-body">
+			<accordion class="col-md-6" close-others="false" >
+				<accordion-group heading="Visible to everybody" is-open="true">
 					<ul class="list-group">
 						<li
 						class="list-group-item"
@@ -74,11 +73,8 @@
 							{{song.object.artist}} - {{song.object.title}}
 						</span>
 					</ul>
-				</div>
-			</div>
-			<div class=" panel panel-primary col-md-6">
-				<div class="panel-heading">"Hidden by everybody"</div>
-				<div class="panel panel-body">
+				</accordion-group>
+				<accordion-group heading="Hidden by everybody" is-open="true">
 					<ul class="list-group">
 						<li
 						class="list-group-item"
@@ -87,8 +83,8 @@
 							{{song.object.artist}} - {{song.object.title}}
 						</li>
 					</ul>
-				</div>
-			</div>
+				</accordion-group>
+			</accordion>
 		</div>
 	</div>
 

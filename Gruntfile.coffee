@@ -71,6 +71,13 @@ module.exports = (grunt) ->
 					src: "**/*.html"
 					dest: buildDir
 				]
+			css:
+				files:[
+					expand: true
+					cwd: "src"
+					src: "**/*.css"
+					dest: buildDir
+				]
 			images:
 				src: "images/**"
 				dest: buildDir+"site"
@@ -85,8 +92,8 @@ module.exports = (grunt) ->
 				files: [ "bower.json" ]
 				tasks: [ "bowerInstall"]
 			stylesheets:
-				files: [ "**/*.sass" ]
-				tasks: [ "sass" ]
+				files: [ "**/*.sass", "src/**/*.css" ]
+				tasks: [ "sass", "copy:css" ]
 				# options:
 				# 	livereload: true
 			html:

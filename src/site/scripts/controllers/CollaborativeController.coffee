@@ -1,5 +1,7 @@
 CollaborativeController = ($scope) ->
 
+	$scope.isDescriptionCollapsed = true
+
 	$scope.db = [
 			{ artist: "Pendulum", title: "Witchcraft" }
 			{ artist: "Rusko", title: "Everyday (Netsky Remix)" }
@@ -11,6 +13,12 @@ CollaborativeController = ($scope) ->
 				object: item
 				hiddenFor: new Set()
 			}
+
+	$scope.hiddenToNone = (item)->
+		item.hiddenFor.size == 0
+
+	$scope.hiddenToEverybody = (item)->
+		item.hiddenFor.size == $scope.users.length
 
 	$scope.users = [
 		"Michael"

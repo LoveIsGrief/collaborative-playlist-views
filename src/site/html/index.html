@@ -5,6 +5,7 @@
 
 	<script src="../scripts/app.js"></script>
 	<script src="../scripts/helpers/set.js"></script>
+	<script src="../scripts/controllers/ModalAddController.js"></script>
 	<script src="../scripts/controllers/CollaborativeController.js"></script>
 	<script src="../scripts/filters/viewToUser.js"></script>
 
@@ -30,9 +31,9 @@
 	</div>
 	<div class="container">
 		<div class="row ">
-			<div class=" panel panel-primary col-md-6">
-				<div class="panel-heading">"Everything"</div>
-				<div class="panel panel-body">
+			<div id="db-panel" class=" panel panel-primary col-md-6">
+				<div id="db-panel-heading" class="panel-heading">"Everything"</div>
+				<div id="db-panel-body" class="panel panel-body">
 					<table class="table table-striped table-hover">
 						<tr>
 							<th>Song</th>
@@ -58,12 +59,12 @@
 									{{user}}
 								</span>
 							</td>
-							<td class="text-muted">TODO</td>
+							<td class="text-muted">{{item.addedBy}}</td>
 						</tr>
 					</table>
 				</div>
 			</div>
-			<accordion class="col-md-6" close-others="false" >
+			<accordion id="db-views" class="col-md-6" close-others="false" >
 				<accordion-group heading="Visible to everybody" is-open="true">
 					<ul class="list-group">
 						<li
@@ -119,10 +120,47 @@
 			</div>
 		</div>
 		<div class="panel-footer">
+			<script type="text/ng-template" id="addItemModal.html">
+				<form ng-submit="done()" class="navbar-form">
+					<div class="modal-header">
+						<h3>Add a song</h3>
+					</div>
+					<div class="modal-body">
 
+						<div class="input-group">
+							<span class="input-group-addon">Artist:</span>
+							<input
+								id="artist-input"
+								type="text"
+								placeholder="Artist" required
+								ng-model="userItem.artist"
+								class="form-control"
+							/>
+						</div>
+
+						<div class="input-group">
+							<span class="input-group-addon">Title:</span>
+							<input
+								type="text"
+								placeholder="Title" required
+								ng-model="userItem.title"
+								class="form-control"
+							/>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input
+						class="btn btn-default"
+						type="submit"
+						id="submit"
+						value="Submit" />
+					</div>
+				</form>
+			</script>
+			<button type="button" class="btn btn-block" ng-click="openAddDialog(user)">
+				<span class="glyphicon glyphicon-plus center-block text-center" />
+			</button>
 		</div>
 	</div>
-
-
 </body>
 </html>

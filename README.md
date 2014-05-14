@@ -12,3 +12,15 @@ npm install
 grunt
 # open build/site/html/index.html in your browser
 ```
+
+Technologies used in the demo (thanks)
+---------------------------------------
+
+ - [bootstrap](http://getbootstrap.com/)
+   - [bootstrap cyborg theme](https://github.com/thomaspark/bootswatch/)
+ - [angularjs](http://www.angularjs.org/)
+   - [angular-bootstrap](http://angular-ui.github.com/bootstrap/)
+ - [coffeescript](http://coffeescript.org/)
+ - [sass](http://sass-lang.com/)
+ - [bower](http://bower.io/)
+ - [grunt](http://gruntjs.com/)
